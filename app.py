@@ -23,7 +23,7 @@ class User(db.Model):
 @app.route("/home",methods = ["GET","POST"])
 def save_user():
     if True:
-        print(request.method, request.form)
+        print(request.method, request.get_json(), request.get_json(silent=True), request.get_json(force=True))
         user = User(name = "yy",points = 2, user_type = "hey")
         db.session.add(user)
         db.session.commit()
