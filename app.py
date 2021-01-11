@@ -1,11 +1,12 @@
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect, request, json, jsonify
 from flask_sqlalchemy import SQLAlchemy
+import os
 # from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676djkjhkffdffdvvbjtigbnbfde280ba245'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
 
 
@@ -19,10 +20,12 @@ class User(db.Model):
         return f"User('{self.name}', '{self.user_type}', '{self.points}')"
 
 
-@app.route("/")
-@app.route("/home",methods = ["GET","POST"])
+# @app.route("/")
+@app.route("/save_user",methods = ["GET","POST"])
 def save_user():
-    data = request.get_json(force=True)
+    data = {'data':"Error"}
+    if request.method == "POST":
+        data = request.get_json(force=True)
     if request.method == "POST" and data:
         user = User(name = data.get('name'),points = data.get('points'), user_type = data.get('user_type'))
         db.session.add(user)
