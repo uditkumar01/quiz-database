@@ -8,8 +8,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 db = SQLAlchemy(app)
-with app.app_context():
-    db.create_all()
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,6 +18,9 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User('{self.name}', '{self.user_type}', '{self.points}')"
+    
+with app.app_context():
+    db.create_all()
 
 
 # @app.route("/")
