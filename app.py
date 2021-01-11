@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect, request, json
+from flask import Flask, render_template, url_for, flash, redirect, request, json, jsonify
 from flask_sqlalchemy import SQLAlchemy
 # from forms import RegistrationForm, LoginForm
 
@@ -31,7 +31,7 @@ def save_user():
         
 #         for user in all_users:
             
-        data = {'data':all_users}
+        data = {'data':jsonify(all_users)}
         response = app.response_class(
             response=json.dumps(data),
             status=200,
