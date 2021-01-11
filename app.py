@@ -34,10 +34,13 @@ def save_user():
         db.session.add(user)
         db.session.commit()
         all_users = User.query.order_by(User.points.desc()).filter_by(user_type = "hwdykmq").limit(5).all()
-        users = []
+        users,rank,countt = [],-1,1
         for user1 in all_users:
+            if rank==-1 and user1.name == data.get('name') and user1.points == data.get('points') and user1.user_type == data.get('user_type'):
+                rank = count
             users.append({"name":user1.name,"points":user1.points,"user_type":user1.user_type})
-        data = {'data':users}
+            count+=1
+        data = {'data':users,'rank':rank}
         response = app.response_class(
             response=json.dumps(data),
             status=200,
