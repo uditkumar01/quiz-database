@@ -33,7 +33,7 @@ def save_user():
         user = User(name = data.get('name'),points = data.get('points'), user_type = data.get('user_type'))
         db.session.add(user)
         db.session.commit()
-        all_users = User.query.order_by(User.points.desc()).filter_by(user_type = "hwdykmq").limit(5).all()
+        all_users = User.query.order_by(User.points.desc()).filter_by(user_type = data.get('user_type')).limit(5).all()
         users,rank,count = [],-1,0
         for user1 in all_users:
             count+=1
