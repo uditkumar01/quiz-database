@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, flash, redirect, request
+from flask import Flask, render_template, url_for, flash, redirect, request, json
 from flask_sqlalchemy import SQLAlchemy
 # from forms import RegistrationForm, LoginForm
 
@@ -27,10 +27,21 @@ def save_user():
         user = User(name = "yy",points = 2, user_type = "hey")
         db.session.add(user)
         db.session.commit()
-
-        return "Done"
+        data = {'data':"DONE"}
+        response = app.response_class(
+            response=json.dumps(data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
     else:
-        return "error"
+        data = {'data':"Error"}
+        response = app.response_class(
+            response=json.dumps(data),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
 
 
 # @app.route("/about")
