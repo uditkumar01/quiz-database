@@ -22,12 +22,16 @@ class User(db.Model):
 @app.route("/")
 @app.route("/home",methods = ["GET","POST"])
 def save_user():
-    if True:
-        print(request.method, request.get_json(), request.get_json(silent=True), request.get_json(force=True))
-        user = User(name = "yy",points = 2, user_type = "hey")
+    data = request.get_json(force=True)
+    if request.method == "POST" and data:
+        user = User(name = data.get('name'),points = data.get('points'), user_type = data.get('user_type'))
         db.session.add(user)
         db.session.commit()
-        data = {'data':"DONE"}
+        all_users = User.query.order_by(User.points.desc()).filter_by(user_type = "hwdykmq").limit(5).all()
+        
+#         for user in all_users:
+            
+        data = {'data':all_users}
         response = app.response_class(
             response=json.dumps(data),
             status=200,
