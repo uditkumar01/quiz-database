@@ -39,7 +39,7 @@ def save_user():
             count+=1
             if rank==-1 and user1.name == data.get('name') and user1.points == data.get('points') and user1.user_type == data.get('user_type'):
                 rank = count
-            if count<=10:
+            if count<=5:
                 users.append({"name":user1.name,"points":user1.points,"user_type":user1.user_type})
             
         data = {'data':users,'rank':rank}
