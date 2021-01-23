@@ -58,7 +58,7 @@ def save_user():
             mimetype='application/json'
         )
         return response
-@app.route("/get_user/<int:total>",methods = ["POST"])
+@app.route("/get_user/<int:total>",methods = ["GET"])
 def get_users(total=math.inf):
     all_users = User.query.order_by(User.points.desc()).filter_by(user_type = data.get('user_type')).all()
     users,count = [],0
