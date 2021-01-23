@@ -60,9 +60,9 @@ def save_user():
         return response
 @app.route("/get_user",methods = ["GET"])
 def get_users():
-    print(request)
-    print(request.args)
-    total = request.args.get('no_of_users')
+#     print(request)
+#     print(request.args)
+    total = int(request.args.get('no_of_users'))
     if not total:
         total = math.inf
     all_users = User.query.order_by(User.points.desc()).filter_by(user_type = request.args.get('user_type')).all()
