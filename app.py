@@ -69,11 +69,11 @@ def get_users(total=math.inf):
         else:
             break
     data = {'data':users,'status':"OK"}
-        response = app.response_class(
-            response=json.dumps(data),
-            status=200,
-            mimetype='application/json'
-        )
+    response = app.response_class(
+        response=json.dumps(data),
+        status=200,
+        mimetype='application/json'
+    )
     return response
 
 
