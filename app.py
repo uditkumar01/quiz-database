@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect, request, json, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
+import math
 # from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ with app.app_context():
 
 
 # @app.route("/")
-@app.route("/save_user",methods = ["GET","POST"])
+@app.route("/save_user",methods = ["POST"])
 def save_user():
     data = {'data':"Error"}
     if request.method == "POST":
@@ -57,6 +58,23 @@ def save_user():
             mimetype='application/json'
         )
         return response
+@app.route("/get_user/<int:total>",methods = ["POST"])
+def get_users(total=math.inf):
+    all_users = User.query.order_by(User.points.desc()).filter_by(user_type = data.get('user_type')).all()
+    users,count = [],0
+    for user1 in all_users:
+        count+=1
+        if count<=total:
+            users.append({"name":user1.name,"points":user1.points,"user_type":user1.user_type})
+        else:
+            break
+    data = {'data':users,'status':"OK"}
+        response = app.response_class(
+            response=json.dumps(data),
+            status=200,
+            mimetype='application/json'
+        )
+    return response
 
 
 # @app.route("/about")
