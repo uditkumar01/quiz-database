@@ -62,9 +62,11 @@ def save_user():
 def get_users():
 #     print(request)
 #     print(request.args)
-    total = int(request.args.get('no_of_users'))
+    total = request.args.get('no_of_users')
     if not total:
         total = math.inf
+    else:
+        total = int(total)
     all_users = User.query.order_by(User.points.desc()).filter_by(user_type = request.args.get('user_type')).all()
     users,count = [],0
     for user1 in all_users:
