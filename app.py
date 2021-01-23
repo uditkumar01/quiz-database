@@ -60,6 +60,8 @@ def save_user():
         return response
 @app.route("/get_user",methods = ["GET"])
 def get_users():
+    print(request)
+    print(request.args)
     total = request.args.get('no_of_users')
     if not total:
         total = math.inf
